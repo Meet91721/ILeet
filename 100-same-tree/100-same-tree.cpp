@@ -13,14 +13,10 @@ class Solution {
 public:
     
     void funcc(TreeNode* node, vector<string> &vec){
-        // if(node == NULL){
-        //     vec.push_back("NULL");
+        // if(node != NULL && node->left == NULL && node->right == NULL){
+        //     vec.push_back(to_string(node->val));
         //     return;
         // }
-        if(node != NULL && node->left == NULL && node->right == NULL){
-            vec.push_back(to_string(node->val));
-            return;
-        }
         if(node == NULL){
             vec.push_back("NULL");
             return;
