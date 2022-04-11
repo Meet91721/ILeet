@@ -1,7 +1,7 @@
 class Solution {
 public:
     
-    map<int, int> mp;
+    unordered_map<int, int> mp;
     
     int funcc(int n){
         
@@ -15,21 +15,11 @@ public:
             return 0;
         }
         
-        int t1, t2;
-        if(mp.find(n - 1) == mp.end())
-        {
-            t1 = funcc(n - 1);
-            mp[n - 1] = t1;
+        if(mp.find(n) == mp.end()){
+            mp[n] = funcc(n - 1) + funcc(n - 2);
+            return mp[n];
         }
-        else
-            t1 = mp[n - 1];
-        if(mp.find(n - 2) == mp.end()){
-            t2 = funcc(n - 2);
-            mp[n - 2] = t2;
-        }
-        else
-            t2 = mp[n - 2];
-        return t1 + t2;
+        return mp[n];
         
     }
     
