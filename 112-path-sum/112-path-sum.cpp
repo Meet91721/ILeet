@@ -14,8 +14,6 @@ public:
     
     bool dfs(TreeNode* node, int sum, int target){
         if(node == NULL){
-            // if(target == sum)
-            //     return true;
             return false;
         }
         if(node->left == NULL && node ->right == NULL){
