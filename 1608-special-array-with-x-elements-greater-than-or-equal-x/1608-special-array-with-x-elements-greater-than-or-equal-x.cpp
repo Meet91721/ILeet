@@ -7,6 +7,7 @@ public:
         while(head <= tail){
             int mid = head + (tail - head) / 2;
             int num = nums[mid];
+            
             if(size - mid > num){
                 head = mid + 1;
             }
@@ -21,7 +22,7 @@ public:
                 return num;
             }
         }
-        cout << head << "  " << tail << '\n';
+        // cout << head << "  " << tail << '\n';
         if(head < size - 1){
             if(size - head - 1< nums[head + 1] && size - head - 1 > nums[head])
                 return size - head - 1;
@@ -36,25 +37,15 @@ public:
                 return size;
         return -1;
     }
+    // int specialArray(vector<int>& nums){
+    //     sort(nums.begin(), nums.end());
+    //     for(int i = 0; i < nums.size(); i++){
+    //         if(nums[i] > nums.size() - 1){
+    //             return -1;
+    //         }
+    //     }
+    // }
 };
 
-// 0 3 6 7 7
-// mid = 2, num = 6
-// mid = 0, num = 0
-
-
-// 0 0 1 4 6 9
-// mid = 2, num = 1
-// mid = 4, num = 6
-// mid
-
-// 0 0
-// mid = 0, num = 0
-// mid = 1, num = 0
-
-// 3 5
-// mid = 0, num = 3
-
-// 0 0 3 4 4
-// mid = 2, num = 3
-// mid = 0, num = 0
+// 7 7 8 8 8 8 8 8 8 8
+// 1 2 3 4 5 6
