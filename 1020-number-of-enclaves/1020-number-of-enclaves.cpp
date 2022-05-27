@@ -21,8 +21,9 @@ public:
         int countt = 0;
         int res = 0;
         for(int i = 0; i < grid.size(); i++){
-            res+=accumulate(grid[i].begin(), grid[i].end(), 0);
+            // res+=accumulate(grid[i].begin(), grid[i].end(), 0);
             for(int j = 0; j < grid[0].size(); j++){
+                res+=grid[i][j];
                 if(i == 0 || i == grid.size() - 1 || j == 0 || j == grid[0].size() - 1){
                     if(visited[i][j] != 1){
                         countt+=traversal(grid, i, j);
