@@ -1,34 +1,27 @@
 class Solution {
 public:
     
-    constexpr static int N = 100100;
-    unordered_map<int,bool> mp;
+    constexpr static int N = 100000;
     bool vis[N];
+    map<int,bool> mp;
     
-    bool recurse(vector<int>& arr, int posn){
-        
-        if(posn >= arr.size() || posn < 0)
+    bool recurse(vector<int>& arr, int node){
+        if(node < 0 || node >= arr.size())
             return false;
-        
-        if(mp.find(posn) != mp.end())
-            return mp[posn];
-        
-        if(arr[posn] == 0)
+        if(arr[node] == 0)
             return true;
         
-        vis[posn] = true;
-        
+        if(mp.find(node) != mp.end()){
+            return  mp[node];
+        }
+        vis[node] = true;
         bool temp = false;
-        
-        if(posn - arr[posn] >= 0 && vis[posn - arr[posn]] == 0){
-            temp = recurse(arr, posn - arr[posn]);
+        if(node - arr[node] >= 0 && vis[node - arr[node]] == false){
+            temp = temp | recurse(arr, node - arr[node]);
         }
-        
-        if(posn + arr[posn] < arr.size() && vis[posn + arr[posn]] == 0){
-            temp = temp | recurse(arr, posn + arr[posn]);
-        }
-        
-        mp[posn] = temp;
+        if(node + arr[node] < arr.size() && vis[arr[node] + node] == false)
+            temp = temp | recurse(arr, node + arr[node]);
+        mp[node] = temp;
         return temp;
     }
     
@@ -36,7 +29,3 @@ public:
         return recurse(arr, start);
     }
 };
-
-/*
-    3 0 1 2 1 2
-*/
