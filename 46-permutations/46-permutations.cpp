@@ -3,30 +3,26 @@ public:
     
     vector<vector<int>>res;
     
-    void recurse(vector<int>&nums, vector<int>&vis, vector<int>&sequence){
+    void recurse(vector<int>&nums, int c){
         
-        if(sequence.size() == nums.size()){
-            res.push_back(sequence);
+        if(c == nums.size()){
+            res.push_back(nums);
             return;
         }
         
-        for(int i = 0; i < nums.size(); i++){
-            if(vis[i])
-                continue;
-            vis[i]=1;
-            sequence.push_back(nums[i]);
-            recurse(nums,vis,sequence);
-            vis[i] = 0;
-            sequence.pop_back();
+        for(int i = c; i < nums.size(); i++){
+            swap(nums[i],nums[c]);
+            recurse(nums, c+1);
+            swap(nums[i],nums[c]);
         }
         
         return;
     }
     
     vector<vector<int>> permute(vector<int>& nums) {
-        vector<int>vis(nums.size(), 0);
-        vector<int>sequence;
-        recurse(nums, vis, sequence);
+        
+        recurse(nums, 0);
+        
         return res;
     }
 };
