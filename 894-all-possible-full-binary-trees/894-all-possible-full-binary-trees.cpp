@@ -12,16 +12,19 @@
 class Solution {
 public:
     
+    unordered_map<int,vector<TreeNode*>>mp;
+    
     vector<TreeNode*> recurse(int n){
-        // cout << n << '\n';
         if(n == 1){
-            // cout <<  "Skip\n\n\n";
             TreeNode* node = new TreeNode();
             vector<TreeNode*>v;
             v.push_back(node);
             return v;
         }
         n--;
+        if(mp.find(n)!=mp.end()){
+            return mp[n];
+        }
         vector<TreeNode*>vec;
         for(int i = 1; i <= n; i+=2){
             vector<TreeNode*> left = recurse(i);
@@ -35,18 +38,8 @@ public:
                 }
             }
         }
+        mp[n]=vec;
         return vec;
-    }
-    
-    void printt(TreeNode* node){
-        if(node == NULL){
-            cout << "THis NULL\n";
-            return;
-        }
-        cout << node->val << '\n';
-        printt(node->left);
-        printt(node->right);
-        return;
     }
     
     vector<TreeNode*> allPossibleFBT(int n) {
