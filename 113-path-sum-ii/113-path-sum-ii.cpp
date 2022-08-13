@@ -14,7 +14,7 @@ public:
     
     vector<vector<int>> res;
     
-    void funcc(TreeNode* node, int tgt, int s, vector<int>temp){
+    void funcc(TreeNode* node, int tgt, int s, vector<int>&temp){
         if(node == NULL){
             // if(s == tgt)
             //     res.push_back(temp);
@@ -25,16 +25,19 @@ public:
         if(s == tgt){
             if(node->left == NULL && node->right == NULL){
                 res.push_back(temp);
+                temp.pop_back();
                 return;
             }
         }
         funcc(node->right, tgt, s, temp);
         funcc(node->left, tgt, s, temp);
+        temp.pop_back();
         return;
     }
     
     vector<vector<int>> pathSum(TreeNode* root, int targetSum) {
-        funcc(root,targetSum,0,{});
+        vector<int>v;
+        funcc(root,targetSum,0,v);
         return res;
     }
 };
