@@ -1,14 +1,14 @@
 class Solution {
 public:
     int ladderLength(string beginWord, string endWord, vector<string>& wordList) {
-        unordered_map<string, vector<string>>g;
+
         if(count(wordList.begin(),wordList.end(),beginWord)==0){
             wordList.push_back(beginWord);
         }
         
         queue<string>q;
         q.push(beginWord);
-        unordered_map<string,int>dist;
+        map<string,int>dist;
         dist[beginWord]=1;
         while(q.size()){
             string curr = q.front();
