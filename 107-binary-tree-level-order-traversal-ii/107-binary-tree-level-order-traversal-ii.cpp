@@ -11,40 +11,29 @@
  */
 class Solution {
 public:
-    
-    vector<vector<int>>res;
-    
-    void funcc(queue<TreeNode*>currentLevel){
-        
-        queue<TreeNode*>nextLevel;
-        vector<int>vec;
-        
-        while(currentLevel.size()){
-            
-            TreeNode* current = currentLevel.front();
-            currentLevel.pop();
-            
-            if(current == NULL)
-                continue;
-            
-            vec.push_back(current->val);
-            
-            if(current->left)
-                nextLevel.push(current->left);
-            if(current->right)
-                nextLevel.push(current->right);
-            
-        }
-        if(nextLevel.size())
-            funcc(nextLevel);
-        if(vec.size())
-            res.push_back(vec);
-    }
-    
     vector<vector<int>> levelOrderBottom(TreeNode* root) {
-        queue<TreeNode*>q;
+        queue<TreeNode*>q,next;
         q.push(root);
-        funcc(q);
+        vector<int>v;
+        vector<vector<int>> res;
+        while(q.size()){
+            while(q.size()){
+                TreeNode* curr = q.front();
+                q.pop();
+                if(curr==NULL)
+                    continue;
+                v.push_back(curr->val);
+                if(curr->left!=NULL)
+                    next.push(curr->left);
+                if(curr->right!=NULL)
+                    next.push(curr->right);
+            }
+            swap(q,next);
+            if(v.size())
+                res.push_back(v);
+            v.clear();
+        }
+        reverse(res.begin(),res.end());
         return res;
     }
 };
