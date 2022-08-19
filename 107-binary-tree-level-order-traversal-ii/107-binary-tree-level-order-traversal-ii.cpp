@@ -14,9 +14,10 @@ public:
     vector<vector<int>> levelOrderBottom(TreeNode* root) {
         queue<TreeNode*>q,next;
         q.push(root);
-        vector<int>v;
+        
         vector<vector<int>> res;
         while(q.size()){
+            vector<int>v;
             while(q.size()){
                 TreeNode* curr = q.front();
                 q.pop();
@@ -31,7 +32,6 @@ public:
             swap(q,next);
             if(v.size())
                 res.push_back(v);
-            v.clear();
         }
         reverse(res.begin(),res.end());
         return res;
