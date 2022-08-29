@@ -1,32 +1,42 @@
 class Solution {
 public:
     int nextGreaterElement(int n) {
-        vector<int>hsh(10,0);
-        string num = to_string(n);
-        int i = num.length()-1;
-        for(; i >= 0; i--){
-            for(int j = 1+num[i]-'0'; j <= 9; j++){
-                if(hsh[j]){
-                    hsh[num[i]-'0']++;
-                    num[i] = j+'0';
-                    hsh[j]--;
-                    i++;
-                    for(int digit = 0; digit < 10; digit++){
-                        int count = hsh[digit];
-                        while(count--){
-                            num[i] = digit+'0';
-                            i++;
-                        }
-                    }
-                    try{
-                        return stoi(num);
-                    }
-                    catch (...){
-                        return -1;
-                    }
+        string nums = to_string(n);
+        int i = nums.size()-1;
+        stack<char>stk;
+        multiset<char>ms;
+        
+        for(;i>=0;i--){
+            while(stk.size()>0 && stk.top()<=nums[i]){
+                ms.insert(stk.top());
+                stk.pop();
+            }
+            if(stk.size()){
+                ms.insert(nums[i]);
+                char here = stk.top();
+                for(auto it: ms){
+                    if(it>nums[i])
+                        here = min(here,it);
+                }
+                while(stk.size()){
+                    ms.insert(stk.top());
+                    stk.pop();
+                }
+                auto it = ms.find(here);
+                ms.erase(it);
+                nums[i] = here;
+                i++;
+                for(auto it: ms){
+                    nums[i++] = it;
+                }
+                try{
+                    return stoi(nums);
+                }
+                catch(...){
+                    return -1;
                 }
             }
-            hsh[num[i]-'0']++;
+            stk.push(nums[i]);
         }
         return -1;
     }
