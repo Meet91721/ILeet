@@ -21,28 +21,30 @@ public:
 
 class Solution {
 public:
-    
-    Node* funcc(Node* node, unordered_map<int,Node*>& mp){
-        // cout << node->val;
-        vector<Node*> neighbour;
-        Node* duplicateNode = new Node(node->val);
-        mp[node->val] = duplicateNode;
-        for(auto it: node->neighbors){
-            if(mp.find(it->val)!=mp.end()){
-                neighbour.emplace_back(mp[it->val]);
-            }
-            else{
-                neighbour.emplace_back(funcc(it, mp));
+    Node* cloneGraph(Node* node) {
+        if(node == NULL)
+            return NULL;
+        Node* root = new Node();
+        root->val = node->val;
+        map<Node*, Node*> mp;
+        mp[node] = root;
+        queue<pair<Node*,Node*>>q;
+        q.push({node,root});
+        while(q.size()){
+            auto [temp,curr] = q.front();
+            q.pop();
+            for(int i = 0; i < temp->neighbors.size(); i++){
+                if(mp.find(temp->neighbors[i])!=mp.end()){
+                    curr->neighbors.push_back(mp[temp->neighbors[i]]);
+                    continue;
+                }
+                Node* tt = new Node();
+                tt->val = temp->neighbors[i]->val;
+                mp[temp->neighbors[i]] = tt;
+                q.push({temp->neighbors[i],tt});
+                curr->neighbors.push_back(mp[temp->neighbors[i]]);
             }
         }
-        duplicateNode->neighbors = neighbour;
-        return duplicateNode;
-    }
-    
-    Node* cloneGraph(Node* node) {
-        if(node==NULL)
-            return NULL;
-        unordered_map<int,Node*> mp;
-        return funcc(node, mp);
+        return root;
     }
 };
