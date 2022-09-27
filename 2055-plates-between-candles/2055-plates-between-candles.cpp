@@ -1,15 +1,24 @@
 class Solution {
 public:
     vector<int> platesBetweenCandles(string s, vector<vector<int>>& queries) {
-        vector<int>candleLocation;
+        vector<int>plates;
         for(int i = 0; i < (int)s.size(); i++)
             if(s[i] == '|')
-                candleLocation.push_back(i);
+                plates.push_back(i);
         vector<int>res;
-        for(int i = 0; i < (int)queries.size(); i++){
-            auto first = lower_bound(candleLocation.begin(), candleLocation.end(),queries[i][0]);
-            auto last = first == candleLocation.end()? first: prev(upper_bound(first,candleLocation.end(),queries[i][1]));
-            res.push_back(first<last?-(*first)+(*last)-distance(first,last):0);
+        for(int i = 0; i < queries.size(); i++){
+            auto l = lower_bound(plates.begin(),plates.end(),queries[i][0]);
+            if(l == plates.end() || *l > queries[i][1]){
+                res.push_back(0);
+                continue;
+            }
+            auto r = lower_bound(plates.begin(),plates.end(),queries[i][1]);
+            if(r == plates.end() || *r!=queries[i][1])
+                advance(r,-1);
+            if(((*r)-(*l))-distance(l,r)>0)
+                res.push_back(((*r)-(*l))-distance(l,r));
+            else 
+                res.push_back(0);
         }
         return res;
     }
