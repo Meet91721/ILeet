@@ -12,7 +12,7 @@ public:
                 res.push_back(0);
                 continue;
             }
-            auto r = lower_bound(plates.begin(),plates.end(),queries[i][1]);
+            auto r = lower_bound(l,plates.end(),queries[i][1]);
             if(r == plates.end() || *r!=queries[i][1])
                 advance(r,-1);
             if(((*r)-(*l))-distance(l,r)>0)
